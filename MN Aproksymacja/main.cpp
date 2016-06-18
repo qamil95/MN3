@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
 #define ILOSC_WEZLOW 50
 #define STOPIEN_WIELOMIANU 6
 using namespace std;
-double a,b,x[ILOSC_WEZLOW],y[ILOSC_WEZLOW], p[STOPIEN_WIELOMIANU][ILOSC_WEZLOW], s[STOPIEN_WIELOMIANU], c[STOPIEN_WIELOMIANU], wspolczynniki[STOPIEN_WIELOMIANU];
+double a,b,x[ILOSC_WEZLOW],y[ILOSC_WEZLOW], p[STOPIEN_WIELOMIANU][ILOSC_WEZLOW], s[STOPIEN_WIELOMIANU], c[STOPIEN_WIELOMIANU], wyniki[ILOSC_WEZLOW];
+fstream plik;
 
 int silnia(int x)
 {
@@ -42,34 +44,37 @@ int main()
 		for (int q = 0; q < ILOSC_WEZLOW; q++)
 		{
 			double tmp = 0;
-			for (int s = 0; s<=k; s++)
+			for (int s = 0; s<=k; s++) //wzór 10
 				tmp += (pow((double)-1,s) * newton(k,s) * newton(k+s,s) * (iloczyn(q,s)/iloczyn(ILOSC_WEZLOW,s)));
 			p[k][q]=tmp;
 		}
 
-	for (int i=0; i<STOPIEN_WIELOMIANU; i++)
+	for (int j=0; j<STOPIEN_WIELOMIANU; j++) //wzor 12 S
 	{
 		double suma=0;
 		for (int q=0; q<ILOSC_WEZLOW; q++)
 		{
-			suma += pow(p[i][q],2);
+			suma += pow(p[j][q],2);
 		}
-		s[i]=suma;
+		s[j]=suma;
 	}
 
-	for (int i=0; i<STOPIEN_WIELOMIANU; i++)
+	for (int j=0; j<STOPIEN_WIELOMIANU; j++) // wzor 12 C
 	{
 		double suma=0;
 		for (int q=0; q<ILOSC_WEZLOW; q++)
 		{
-			suma += y[q]*p[i][q];
+			suma += y[q]*p[j][q];
 		}
-		c[i]=suma;
+		c[j]=suma;
 	}
 
-	for (int i = 0; i<STOPIEN_WIELOMIANU; i++)
-		wspolczynniki[i] = (c[i]/s[i]);
-
+	for (int j = 0; j<STOPIEN_WIELOMIANU; j++)
+		for (int q = 0; q<ILOSC_WEZLOW; q++)
+			wyniki[q] = (c[j]/s[j]) * p[j][q];
+	plik.open("WYNIKI", ios::out);
+	for (int i = 0; i < ILOSC_WEZLOW; i++)
+		plik << y[i] << '\t' << wyniki[i] << endl;
 	system("PAUSE");
 	return 0;
 }
