@@ -1,7 +1,9 @@
 #include <iostream>
 #include <cmath>
+#define ILOSC_WEZLOW 50
+#define STOPIEN_WIELOMIANU 6
 using namespace std;
-double a,b,x[50],y[50], p[6][50], s[6], c[6], wspolczynniki[6];
+double a,b,x[ILOSC_WEZLOW],y[ILOSC_WEZLOW], p[STOPIEN_WIELOMIANU][ILOSC_WEZLOW], s[STOPIEN_WIELOMIANU], c[STOPIEN_WIELOMIANU], wspolczynniki[STOPIEN_WIELOMIANU];
 
 int silnia(int x)
 {
@@ -30,42 +32,42 @@ int main()
 	a = -2; //poczatek przedzialu
 	b = 2; //koniec przedzialu
 
-	for (int i=0; i<50; i++) //rownoodlegle wezly
-		x[i]=a+i*((b-a)/49);
+	for (int i=0; i<ILOSC_WEZLOW; i++) //rownoodlegle wezly
+		x[i]=a+i*((b-a)/ILOSC_WEZLOW-1);
 
-	for (int i=0; i<50; i++) //wartosc funkcji w tych wezlach
+	for (int i=0; i<ILOSC_WEZLOW; i++) //wartosc funkcji w tych wezlach
 		y[i] = sin(x[i]);
 
-	for (int k = 0; k < 6; k++) //zmienia stopieñ
-		for (int q = 0; q < 50; q++)
+	for (int k = 0; k < STOPIEN_WIELOMIANU; k++) //zmienia stopieñ
+		for (int q = 0; q < ILOSC_WEZLOW; q++)
 		{
 			double tmp = 0;
 			for (int s = 0; s<=k; s++)
-				tmp += (pow((double)-1,s) * newton(k,s) * newton(k+s,s) * (iloczyn(q,s)/iloczyn(50,s)));
+				tmp += (pow((double)-1,s) * newton(k,s) * newton(k+s,s) * (iloczyn(q,s)/iloczyn(ILOSC_WEZLOW,s)));
 			p[k][q]=tmp;
 		}
 
-	for (int i=0; i<6; i++)
+	for (int i=0; i<STOPIEN_WIELOMIANU; i++)
 	{
 		double suma=0;
-		for (int q=0; q<50; q++)
+		for (int q=0; q<ILOSC_WEZLOW; q++)
 		{
 			suma += pow(p[i][q],2);
 		}
 		s[i]=suma;
 	}
 
-	for (int i=0; i<6; i++)
+	for (int i=0; i<STOPIEN_WIELOMIANU; i++)
 	{
 		double suma=0;
-		for (int q=0; q<50; q++)
+		for (int q=0; q<ILOSC_WEZLOW; q++)
 		{
 			suma += y[q]*p[i][q];
 		}
 		c[i]=suma;
 	}
 
-	for (int i = 0; i<6; i++)
+	for (int i = 0; i<STOPIEN_WIELOMIANU; i++)
 		wspolczynniki[i] = (c[i]/s[i]);
 
 	system("PAUSE");
