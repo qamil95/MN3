@@ -75,10 +75,6 @@ int main()
 
 /*
 Sprawozdanie polega na tym ze:
-przeprowadzenie pewnych badan
-znaczy ja prowadze bardzo rozne przedmioty
-I inne pierdo³y jakieœ tam mondre bardzo.
-
 Startujemy z danych testowych na tablicy, ale funkcja w sprawku siê zmienia i ma byæ inna:
 
 cos^2(x) * cos(4x)
