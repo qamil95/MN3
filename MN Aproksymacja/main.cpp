@@ -35,7 +35,7 @@ int main()
 	b = 2; //koniec przedzialu
 
 	for (int i=0; i<ILOSC_WEZLOW; i++) //rownoodlegle wezly
-		x[i]=a+i*((b-a)/ILOSC_WEZLOW-1);
+		x[i]=a+i*((b-a)/ (ILOSC_WEZLOW-1));
 
 	for (int i=0; i<ILOSC_WEZLOW; i++) //wartosc funkcji w tych wezlach
 		y[i] = sin(x[i]);
