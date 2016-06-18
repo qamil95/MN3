@@ -51,6 +51,16 @@ double C(int j)
 	return wynik;
 }
 
+double blad()
+{
+	double wynik = 0;
+	for (int i = 0; i < ILOSC_WEZLOW; i++)
+		wynik += pow(wyniki[i] - y[i], 2);
+	wynik /= ILOSC_WEZLOW + 1;
+	wynik = sqrt(wynik);
+	return wynik;	
+}
+
 int main()
 {
 	for (int i=0; i<ILOSC_WEZLOW; i++) //rownoodlegle wezly
@@ -69,6 +79,7 @@ int main()
 	plik.open("WYNIKI.txt", ios::out);
 	for (int i = 0; i < ILOSC_WEZLOW; i++)
 		plik << x[i] << '\t' << y[i] << '\t' << wyniki[i] << endl;
+	plik << "BLAD = " << blad();
 	system("PAUSE");
 	return 0;
 }
