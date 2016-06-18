@@ -4,19 +4,16 @@
 #define ILOSC_WEZLOW 50
 #define STOPIEN_WIELOMIANU 6
 using namespace std;
-double a,b,x[ILOSC_WEZLOW],y[ILOSC_WEZLOW], p[STOPIEN_WIELOMIANU][ILOSC_WEZLOW], s[STOPIEN_WIELOMIANU], c[STOPIEN_WIELOMIANU], wyniki[ILOSC_WEZLOW];
+double a=-2.0, b=2.0, x[ILOSC_WEZLOW], y[ILOSC_WEZLOW], wyniki[ILOSC_WEZLOW];
 fstream plik;
-
-int silnia(int x)
-{
-	if (x == 0)
-		return 1;
-    return x * silnia(x - 1);
-}
 
 double newton(int x, int y)
 {
-	return silnia(x) / (silnia(y) * silnia (x-y));
+	double wynik = 1.0;
+	for (int i = 1; i <= y; i++) {
+		wynik *= (double)(x - i + 1) / i;
+	}
+	return wynik;
 }
 
 double iloczyn(int r, int s) 
@@ -29,51 +26,46 @@ double iloczyn(int r, int s)
 	return wynik;
 }
 
+double wielomianGrama(int k, int n, int q) 
+{
+	double wynik = 0;
+	for (int s = 0; s <= k; s++) {
+		wynik += (double)(pow(-1, s)*newton(k, s))*newton(k + s, s)*(iloczyn(q, s) / iloczyn(n, s));
+	}
+	return wynik;
+}
+
+double S(int j) 
+{
+	double wynik = 0;
+	for (int q = 0; q <= ILOSC_WEZLOW; q++)
+		wynik += pow(wielomianGrama(j, ILOSC_WEZLOW, q), 2);
+	return wynik;
+}
+
+double C(int j) 
+{
+	double wynik = 0;
+	for (int q = 0; q <= ILOSC_WEZLOW; q++)
+		wynik += y[q] * wielomianGrama(j, ILOSC_WEZLOW, q);
+	return wynik;
+}
+
 int main()
 {
-	a = -2; //poczatek przedzialu
-	b = 2; //koniec przedzialu
-
 	for (int i=0; i<ILOSC_WEZLOW; i++) //rownoodlegle wezly
 		x[i]=a+i*((b-a)/ (ILOSC_WEZLOW-1));
 
 	for (int i = 0; i < ILOSC_WEZLOW; i++) //wartosc funkcji w tych wezlach
 		//y[i] = sin(x[i]);
-		y[i] = cos(x[i])*cos(x[i])*sin(3 * x[i]);
+		y[i] = cos(x[i]) * cos(x[i])* cos(4*x[i]);
 
-	for (int k = 0; k < STOPIEN_WIELOMIANU; k++) //zmienia stopień
-		for (int q = 0; q < ILOSC_WEZLOW; q++)
-		{
-			double tmp = 0;
-			for (int s = 0; s<=k; s++) //wzór 10
-				tmp += (pow((double)-1,s) * newton(k,s) * newton(k+s,s) * (iloczyn(q,s)/iloczyn(ILOSC_WEZLOW,s)));
-			p[k][q]=tmp;
-		}
-
-	for (int j=0; j<STOPIEN_WIELOMIANU; j++) //wzor 12 S
+	for (int q = 0; q < ILOSC_WEZLOW; q++) 
 	{
-		double suma=0;
-		for (int q=0; q<ILOSC_WEZLOW; q++)
-		{
-			suma += pow(p[j][q],2);
-		}
-		s[j]=suma;
+		wyniki[q] = 0;
+		for (int j = 0; j < STOPIEN_WIELOMIANU; j++)
+			wyniki[q] += (C(j) / S(j)) * wielomianGrama(j, ILOSC_WEZLOW, q);
 	}
-
-	for (int j=0; j<STOPIEN_WIELOMIANU; j++) // wzor 12 C
-	{
-		double suma=0;
-		for (int q=0; q<ILOSC_WEZLOW; q++)
-		{
-			suma += y[q]*p[j][q];
-		}
-		c[j]=suma;
-	}
-
-	for (int j = 0; j<STOPIEN_WIELOMIANU; j++)
-		for (int q = 0; q<ILOSC_WEZLOW; q++)
-			wyniki[q] = (c[j]/s[j]) * p[j][q];
-
 	plik.open("WYNIKI.txt", ios::out);
 	for (int i = 0; i < ILOSC_WEZLOW; i++)
 		plik << x[i] << '\t' << y[i] << '\t' << wyniki[i] << endl;
