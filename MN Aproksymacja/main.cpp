@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <cmath>
 #include <fstream>
 #define ILOSC_WEZLOW 50
@@ -37,14 +37,15 @@ int main()
 	for (int i=0; i<ILOSC_WEZLOW; i++) //rownoodlegle wezly
 		x[i]=a+i*((b-a)/ (ILOSC_WEZLOW-1));
 
-	for (int i=0; i<ILOSC_WEZLOW; i++) //wartosc funkcji w tych wezlach
-		y[i] = sin(x[i]);
+	for (int i = 0; i < ILOSC_WEZLOW; i++) //wartosc funkcji w tych wezlach
+		//y[i] = sin(x[i]);
+		y[i] = cos(x[i])*cos(x[i])*sin(3 * x[i]);
 
-	for (int k = 0; k < STOPIEN_WIELOMIANU; k++) //zmienia stopieñ
+	for (int k = 0; k < STOPIEN_WIELOMIANU; k++) //zmienia stopieÅ„
 		for (int q = 0; q < ILOSC_WEZLOW; q++)
 		{
 			double tmp = 0;
-			for (int s = 0; s<=k; s++) //wzór 10
+			for (int s = 0; s<=k; s++) //wzÃ³r 10
 				tmp += (pow((double)-1,s) * newton(k,s) * newton(k+s,s) * (iloczyn(q,s)/iloczyn(ILOSC_WEZLOW,s)));
 			p[k][q]=tmp;
 		}
@@ -72,9 +73,10 @@ int main()
 	for (int j = 0; j<STOPIEN_WIELOMIANU; j++)
 		for (int q = 0; q<ILOSC_WEZLOW; q++)
 			wyniki[q] = (c[j]/s[j]) * p[j][q];
-	plik.open("WYNIKI", ios::out);
+
+	plik.open("WYNIKI.txt", ios::out);
 	for (int i = 0; i < ILOSC_WEZLOW; i++)
-		plik << y[i] << '\t' << wyniki[i] << endl;
+		plik << x[i] << '\t' << y[i] << '\t' << wyniki[i] << endl;
 	system("PAUSE");
 	return 0;
 }
@@ -83,18 +85,18 @@ int main()
 Sprawozdanie polega na tym ze:
 przeprowadzenie pewnych badan
 znaczy ja prowadze bardzo rozne przedmioty
-I inne pierdo³y jakieœ tam mondre bardzo.
+I inne pierdoÅ‚y jakieÅ› tam mondre bardzo.
 
-Startujemy z danych testowych na tablicy, ale funkcja w sprawku siê zmienia i ma byæ inna:
+Startujemy z danych testowych na tablicy, ale funkcja w sprawku siÄ™ zmienia i ma byÄ‡ inna:
 
 cos^2(x) * cos(4x)
 
-Na pocz¹tku w sprawku metoda aproksymacji i dla jakiej funkcji.
-BADANIA: Zwiêkszaæ stopieñ wielomianu aproksymacyjnego od 1 do 20 podaj¹c za ka¿dym razem wartoœæ b³êdu.
-Na tej podstawie dobraæ optymalny stopien wielomianu aproxymacyjnego, kilkukrotnie (min 3 razy) zmienic pozostale parametry,
+Na poczÄ…tku w sprawku metoda aproksymacji i dla jakiej funkcji.
+BADANIA: ZwiÄ™kszaÄ‡ stopieÅ„ wielomianu aproksymacyjnego od 1 do 20 podajÄ…c za kaÅ¼dym razem wartoÅ›Ä‡ bÅ‚Ä™du.
+Na tej podstawie dobraÄ‡ optymalny stopien wielomianu aproxymacyjnego, kilkukrotnie (min 3 razy) zmienic pozostale parametry,
 tj szerokosc i polozenie przedzialow, oraz liczbe wezlow, podac wartosc bledu w formie tabelki i/lub wykresu.
-Wyci¹gamy wnioski i obserwacje p³yn¹ce z b³êdu oraz ze wspolczynnikow. 
-Zamieœciæ kod i minimum jeden wykres. Coœ o jakichœ zastosowaniach i czy spotkalismy sie juz z problemem aproksymacji
-na innych przedmiotach w programie studiów.
+WyciÄ…gamy wnioski i obserwacje pÅ‚ynÄ…ce z bÅ‚Ä™du oraz ze wspolczynnikow. 
+ZamieÅ›ciÄ‡ kod i minimum jeden wykres. CoÅ› o jakichÅ› zastosowaniach i czy spotkalismy sie juz z problemem aproksymacji
+na innych przedmiotach w programie studiÃ³w.
 Pok 518, papirowe.
 */
