@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-//Kamilek Ziêtulek
+//Kamilek Ziêtulek //widzisz to? :D
 using namespace std;
 double a,b,x[50],y[50], p[6][50], s[6], c[6], wspolczynniki[6];
 
@@ -75,6 +75,10 @@ int main()
 
 /*
 Sprawozdanie polega na tym ze:
+przeprowadzenie pewnych badan
+znaczy ja prowadze bardzo rozne przedmioty
+I inne pierdo³y jakieœ tam mondre bardzo.
+
 Startujemy z danych testowych na tablicy, ale funkcja w sprawku siê zmienia i ma byæ inna:
 
 cos^2(x) * cos(4x)
