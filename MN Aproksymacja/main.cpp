@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-//Kamilek Ziêtulek //widzisz to? :D
 using namespace std;
 double a,b,x[50],y[50], p[6][50], s[6], c[6], wspolczynniki[6];
 
@@ -28,16 +27,16 @@ double iloczyn(int r, int s)
 
 int main()
 {
-	a = -2;
-	b = 2;
+	a = -2; //poczatek przedzialu
+	b = 2; //koniec przedzialu
 
-	for (int i=0; i<50; i++)
+	for (int i=0; i<50; i++) //rownoodlegle wezly
 		x[i]=a+i*((b-a)/49);
 
-	for (int i=0; i<50; i++)
+	for (int i=0; i<50; i++) //wartosc funkcji w tych wezlach
 		y[i] = sin(x[i]);
 
-	for (int k = 0; k < 6; k++)//zmienia stopieñ
+	for (int k = 0; k < 6; k++) //zmienia stopieñ
 		for (int q = 0; q < 50; q++)
 		{
 			double tmp = 0;
