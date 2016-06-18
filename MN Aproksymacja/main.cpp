@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-
+//Kamilek Ziêtulek
 using namespace std;
 double a,b,x[50],y[50], p[6][50], s[6], c[6], wspolczynniki[6];
 
